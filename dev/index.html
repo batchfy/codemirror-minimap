@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>codemirror-minimap playground</title>
+        <style>
+            :root {
+                color-scheme: light;
+                --bg: #ffffff;
+                --fg: #1f2328;
+                --border: rgba(128, 128, 128, 0.35);
+            }
+            :root[data-theme="dark"] {
+                color-scheme: dark;
+                --bg: #282c34;
+                --fg: #dcdfe4;
+                --border: rgba(160, 160, 160, 0.3);
+            }
+            :root {
+                font-family:
+                    ui-sans-serif,
+                    system-ui,
+                    -apple-system,
+                    sans-serif;
+            }
+            body {
+                background: var(--bg);
+                color: var(--fg);
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+            }
+            #controls {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                align-items: center;
+                padding: 0.6rem 0.9rem;
+                border-bottom: 1px solid var(--border);
+                font-size: 13px;
+            }
+            #controls label {
+                display: flex;
+                gap: 0.35rem;
+                align-items: center;
+            }
+            #controls .sep {
+                width: 1px;
+                align-self: stretch;
+                background: var(--border);
+            }
+            #readout {
+                margin-left: auto;
+                font-family: ui-monospace, SFMono-Regular, monospace;
+                opacity: 0.8;
+            }
+            #editor {
+                flex: 1;
+                min-height: 0;
+                overflow: hidden;
+            }
+            .cm-editor {
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="controls">
+            <label
+                >displayText
+                <select id="displayText">
+                    <option value="characters">characters</option>
+                    <option value="blocks">blocks</option>
+                </select>
+            </label>
+            <label
+                >showOverlay
+                <select id="showOverlay">
+                    <option value="always">always</option>
+                    <option value="mouse-over">mouse-over</option>
+                </select>
+            </label>
+            <label><input type="checkbox" id="autohide" /> autohide</label>
+            <label><input type="checkbox" id="gutters" /> gutters</label>
+            <label
+                ><input type="checkbox" id="hideScrollbar" checked /> hide
+                scrollbar</label
+            >
+            <label
+                >width
+                <input
+                    type="range"
+                    id="width"
+                    min="40"
+                    max="400"
+                    step="10"
+                    value="120"
+                />
+                <span id="widthValue">120px</span>
+            </label>
+            <label
+                ><input type="checkbox" id="diagnostics" /> diagnostics</label
+            >
+            <label
+                >theme
+                <select id="theme">
+                    <option value="light">light</option>
+                    <option value="dark">dark</option>
+                </select>
+            </label>
+            <span class="sep"></span>
+            <label
+                >doc
+                <select id="size">
+                    <option value="1">1x (~50 lines)</option>
+                    <option value="20" selected>20x (~1k lines)</option>
+                    <option value="100">100x (~5k lines)</option>
+                </select>
+            </label>
+            <button id="stress">stress: extend selection ×200</button>
+            <span id="readout">ready</span>
+        </div>
+        <div id="editor"></div>
+        <script type="module" src="./main.ts"></script>
+    </body>
+</html>

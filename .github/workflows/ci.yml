@@ -1,0 +1,44 @@
+name: CI
+
+# Only main and branches with an open pull request. A push to any other branch
+# matches neither trigger, so it runs nothing.
+on:
+    push:
+        branches: [main]
+    pull_request:
+
+# A new commit supersedes the run already in flight for the same branch.
+concurrency:
+    group: ci-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    check:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  cache: npm
+
+            - run: npm ci
+
+            # `!cancelled()` keeps the later steps running after an earlier failure,
+            # so one run reports every problem instead of only the first.
+            - name: Prettier
+              if: ${{ !cancelled() }}
+              run: npm run format:check
+
+            - name: ESLint
+              if: ${{ !cancelled() }}
+              run: npm run lint
+
+            - name: Test
+              if: ${{ !cancelled() }}
+              run: npm test

@@ -1,0 +1,14 @@
+dist/
+node_modules/
+
+.config
+.cache
+.DS_Store
+.npm_cache
+.upm
+.vscode
+.yarn-cache
+bun.lockb
+
+npm-debug.log
+yarn-error.log
