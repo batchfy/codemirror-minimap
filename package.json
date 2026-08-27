@@ -30,6 +30,7 @@
     "scripts": {
         "dev": "vite ./dev",
         "build": "rollup -c && tsc -p tsconfig.build.json",
+        "prepare": "npm run build",
         "test": "vitest run",
         "test:watch": "vitest",
         "bench": "vitest bench --run",
